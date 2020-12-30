@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enc_base64.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/30 17:21:12 by eduwer            #+#    #+#             */
+/*   Updated: 2020/12/30 17:25:49 by eduwer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl_base64.h>
 
 void	b64_finish_padding(char *str, size_t padding, char *ret)
 {
-	char buff[4] = { '\0' };
+	char buff[4];
 
+	ft_memset(buff, '\0', 4);
 	if (padding == 0)
-		return;
+		return ;
 	ft_memcpy(buff, str, 3 - padding);
 	ret[0] = get_enc_char_1(buff);
 	ret[1] = get_enc_char_2(buff);
 	if (padding == 1)
 		ret[2] = get_enc_char_3(buff);
 	ft_memset(&ret[4 - padding], '=', padding);
-	
 }
 
 /*
@@ -35,12 +47,13 @@ char	*enc_base64(char *str, size_t size, size_t *ret_size)
 	if ((ret = (char *)ft_memalloc(*ret_size)) == NULL)
 		return (NULL);
 	i = 0;
-	while (i < nb_groups * 4) {
+	while (i < nb_groups * 4)
+	{
 		ret[i] = get_enc_char_1(str);
 		ret[i + 1] = get_enc_char_2(str);
 		ret[i + 2] = get_enc_char_3(str);
 		ret[i + 3] = get_enc_char_4(str);
-		i+= 4;
+		i += 4;
 		str += 3;
 	}
 	b64_finish_padding(str, padding, ret + i);

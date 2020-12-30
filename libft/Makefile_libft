@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile_libft                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduwer <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/05 18:54:25 by eduwer            #+#    #+#              #
-#    Updated: 2020/02/29 13:55:30 by eduwer           ###   ########.fr        #
+#    Updated: 2020/12/30 17:20:15 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ NAME = libft.a
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror -I./include
+CFLAGS = -O3 -Wall -Wextra -Wno-unused-result -Werror -I./include
 
 SRCF = ./srcs/libft/
 

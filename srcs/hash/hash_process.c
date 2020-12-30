@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   hash_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:16:21 by eduwer            #+#    #+#             */
-/*   Updated: 2020/03/03 20:51:39 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/30 17:34:05 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void		process_stdin(t_hash_args *args, bool print_stdin)
 	free(ret);
 }
 
-static char	*open_and_read_file(t_hash_args *args, char *file_name, size_t *size)
+static char	*open_and_read_file(t_hash_args *args, \
+	char *file_name, size_t *size)
 {
 	int		fd;
 	char	*file;

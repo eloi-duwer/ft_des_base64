@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   base64_parse_args.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/30 17:21:01 by eduwer            #+#    #+#             */
+/*   Updated: 2020/12/30 17:22:56 by eduwer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl_base64.h>
 #include <ft_ssl.h>
 
@@ -23,7 +35,8 @@ static int	process_base64(t_base64_args *args)
 		print_errno("ft_ssl: can't open output file: ");
 		return (1);
 	}
-	if (write(fd, ret, ret_size) == -1 || (args->decode == false && write(fd, "\n", 1) == -1))
+	if (write(fd, ret, ret_size) == -1 || \
+		(args->decode == false && write(fd, "\n", 1) == -1))
 	{
 		print_errno("ft_ssl: error while writing to file: ");
 		return (1);
@@ -44,7 +57,8 @@ static int	read_file_and_process(t_base64_args *args)
 			print_errno("ft_ssl: Can't open input file: ");
 			return (1);
 		}
-		if (read_whole_file(args->fd, (void **)&args->data, &args->data_size) != 0)
+		if (read_whole_file(args->fd, \
+			(void **)&args->data, &args->data_size) != 0)
 		{
 			print_errno("ft_ssl: Error while reading input file: ");
 			return (1);
@@ -72,7 +86,6 @@ static int	base64_parse_subargs(t_base64_args *args, int ac, char **av)
 		{
 			ft_printf("argument -i needs an input file after it\n");
 			return (1);
-
 		}
 		args->input_file = av[args->av_i];
 	}

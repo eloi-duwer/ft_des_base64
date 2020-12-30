@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_parse_args.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/30 17:33:18 by eduwer            #+#    #+#             */
+/*   Updated: 2020/12/30 17:33:38 by eduwer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl_hash.h>
 #include <ft_ssl.h>
 
@@ -51,7 +63,7 @@ static int	hash_parse_args(t_hash_args *args, int ac, char **av)
 int			hash_arg_parsing(int ac, char **av)
 {
 	t_hash_args	args;
-	
+
 	args.av_i = 1;
 	args.av_j = 0;
 	args.quiet = false;
