@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2020/03/04 15:18:11 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/31 18:02:32 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int			print_base64_usage(void)
 [-o output_file]\n");
 	return (1);
 }
+
+#include <ft_ssl_des.h>
 
 int			main(int argc, char **argv)
 {

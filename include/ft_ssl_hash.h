@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ssl_hash.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/31 01:50:35 by eduwer            #+#    #+#             */
+/*   Updated: 2020/12/31 17:55:08 by eduwer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_SSL_HASH_H
 # define FT_SSL_HASH_H
 
@@ -70,10 +82,8 @@ char			*calc_sha256(char *str, size_t size);
 char			*calc_sha512(char *str, size_t size);
 char			*calc_sha384(char *str, size_t size);
 
-/*
-** global array of function used to find the good operation for md5 hash, branchlessly
-*/
-
+bool			sha256(t_sha256_ctx *ctx, char *str, size_t size);
+uint8_t			*raw_sha256(uint8_t *str, size_t size);
 void			process_stdin(t_hash_args *args, bool print_stdin);
 void			process_string(t_hash_args *args, int ac, char **av);
 void			process_file(t_hash_args *args, char *file_name);

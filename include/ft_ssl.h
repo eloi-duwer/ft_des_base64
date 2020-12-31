@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2020/03/04 15:16:16 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/30 18:56:12 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <libft.h>
 # include <stdint.h>
 # include <stdbool.h>
-# include <unistd.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>

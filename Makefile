@@ -18,6 +18,7 @@ SRC_NAME = main.c \
 	hash/md5/digest.c \
 	hash/md5/rounds.c \
 	hash/sha256/sha256.c \
+	hash/sha256/exposed_sha256.c \
 	hash/sha256/sha256_helpers.c \
 	hash/sha512/sha512.c \
 	hash/sha512/sha512_helpers.c \
@@ -26,13 +27,14 @@ SRC_NAME = main.c \
 	cipher/base64/dec_base64.c \
 	cipher/base64/base64_parse_args.c \
 	cipher/base64/get_enc_char.c \
-	cipher/base64/get_dec_char.c
+	cipher/base64/get_dec_char.c \
+	cipher/pbkdf2/hmac/hmac.c
 
 NAME = ft_ssl
 
 CC = gcc
 
-CFLAGS = -I./include -I./libft/include -Wall -Wextra -Wno-unused-result -O3
+CFLAGS = -I./include -I./libft/include -Wall -Wextra -Wno-unused-result -g
 
 SRCF = ./srcs/
 
@@ -45,7 +47,7 @@ LFT = libft/libft.a
 all: $(NAME)
 
 $(NAME): $(LFT) $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) -L./libft -lft -O3
+	$(CC) -o $(NAME) $(OBJS) -L./libft -lft -g
 
 $(LFT):
 	make -C ./libft

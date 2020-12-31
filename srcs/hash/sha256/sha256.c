@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 15:02:15 by eduwer            #+#    #+#             */
-/*   Updated: 2020/03/02 17:06:22 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/31 17:55:38 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	sha256_operation(t_sha256_ctx *ctx, int j)
 	ctx->work_var[A] = t1 + t2;
 }
 
-void		sha256_loop(t_sha256_ctx *ctx, int i)
+static void	sha256_loop(t_sha256_ctx *ctx, int i)
 {
 	int			j;
 
@@ -114,25 +114,20 @@ void		sha256_loop(t_sha256_ctx *ctx, int i)
 	}
 }
 
-char		*calc_sha256(char *str, size_t size)
+bool		sha256(t_sha256_ctx *ctx, char *str, size_t size)
 {
-	t_sha256_ctx	ctx;
 	size_t			i;
-	char			*ret;
 
-	if ((ctx.message = (unsigned char *)ft_memalloc(size)) == NULL)
-		return (NULL);
-	ft_memcpy(ctx.message, str, size);
-	ctx.original_size = size;
-	if (padding(&ctx) != 0)
-		return (NULL);
-	init(&ctx);
+	if ((ctx->message = (unsigned char *)ft_memalloc(size)) == NULL)
+		return (false);
+	ft_memcpy(ctx->message, str, size);
+	ctx->original_size = size;
+	if (padding(ctx) != 0)
+		return (false);
+	init(ctx);
 	i = 0;
-	while (i < ctx.current_size / (16 * 4))
-		sha256_loop(&ctx, i++);
-	ft_asprintf(&ret, "%08x%08x%08x%08x%08x%08x%08x%08x", \
-		ctx.hash[0], ctx.hash[1], ctx.hash[2], ctx.hash[3], \
-		ctx.hash[4], ctx.hash[5], ctx.hash[6], ctx.hash[7]);
-	free(ctx.message);
-	return (ret);
+	while (i < ctx->current_size / 64)
+		sha256_loop(ctx, i++);
+	free(ctx->message);
+	return (true);
 }
