@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 18:50:39 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 18:04:02 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/31 18:18:03 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,6 @@ static uint8_t	*get_key(uint8_t *key, size_t size)
 	return (ret);
 }
 
-uint8_t			*concat(uint8_t *a, size_t size_a, uint8_t *b, size_t size_b)
-{
-	uint8_t	*ret;
-
-	if ((ret = (uint8_t *)malloc(size_a + size_b)) == NULL)
-		return (NULL);
-	ft_memcpy(ret, a, size_a);
-	ft_memcpy(&ret[size_a], b, size_b);
-	return (ret);
-}
-
 uint8_t			*hmac_sha256(uint8_t *key, size_t key_size, char *msg)
 {
 	uint8_t	opad[64];
@@ -61,10 +50,10 @@ uint8_t			*hmac_sha256(uint8_t *key, size_t key_size, char *msg)
 		i++;
 	}
 	free(key);
-	buff = concat(ipad, 64, (uint8_t *)msg, ft_strlen(msg));
+	buff = ft_memcat(ipad, 64, (uint8_t *)msg, ft_strlen(msg));
 	key = raw_sha256(buff, 64 + ft_strlen(msg));
 	free(buff);
-	buff = concat(opad, 64, key, 32);
+	buff = ft_memcat(opad, 64, key, 32);
 	free(key);
 	key = raw_sha256(buff, 64 + 32);
 	free(buff);
