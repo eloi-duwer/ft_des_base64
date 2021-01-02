@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 20:13:17 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 17:56:18 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 01:13:27 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ uint8_t		*raw_sha256(uint8_t *str, size_t size)
 		ret[4 * i + 3] = ((uint8_t *)(&(ctx.hash[i])))[0];
 		i++;
 	}
-	return ret;
+	return (ret);
 }

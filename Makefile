@@ -12,6 +12,7 @@
 
 SRC_NAME = main.c \
 	helpers/helpers.c \
+	helpers/print_helpers.c \
 	helpers/reverse_bits.c \
 	hash/hash_parse_args.c \
 	hash/hash_process.c \

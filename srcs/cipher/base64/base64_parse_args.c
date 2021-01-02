@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/30 17:22:56 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 01:22:09 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,14 @@ static int	process_base64(t_base64_args *args)
 	else
 		ret = enc_base64(args->data, args->data_size, &ret_size);
 	if (ret == NULL)
-	{
-		print_errno("ft_ssl: Error during base64 process: ");
-		return (1);
-	}
+		return (print_errno("ft_ssl: Error during base64 process: "));
 	fd = 1;
 	if (args->output_file != NULL && (fd = open(args->output_file, \
 		O_CREAT | O_TRUNC | O_WRONLY, S_IRWXU)) == -1)
-	{
-		print_errno("ft_ssl: can't open output file: ");
-		return (1);
-	}
+		return (print_errno("ft_ssl: can't open output file: "));
 	if (write(fd, ret, ret_size) == -1 || \
 		(args->decode == false && write(fd, "\n", 1) == -1))
-	{
-		print_errno("ft_ssl: error while writing to file: ");
-		return (1);
-	}
+		return (print_errno("ft_ssl: error while writing to file: "));
 	if (fd != 1)
 		close(fd);
 	free(args->data);
@@ -53,23 +44,14 @@ static int	read_file_and_process(t_base64_args *args)
 	if (args->input_file != NULL)
 	{
 		if ((args->fd = open(args->input_file, O_RDONLY)) == -1)
-		{
-			print_errno("ft_ssl: Can't open input file: ");
-			return (1);
-		}
+			return (print_errno("ft_ssl: Can't open input file: "));
 		if (read_whole_file(args->fd, \
 			(void **)&args->data, &args->data_size) != 0)
-		{
-			print_errno("ft_ssl: Error while reading input file: ");
-			return (1);
-		}
+			return (print_errno("ft_ssl: Error while reading input file: "));
 		close(args->fd);
 	}
 	else if (read_whole_stdin((void **)&args->data, &args->data_size) != 0)
-	{
-		print_errno("ft_ssl: Error while reading stdin: ");
-		return (1);
-	}
+		return (print_errno("ft_ssl: Error while reading stdin: "));
 	return (process_base64(args));
 }
 
@@ -83,20 +65,14 @@ static int	base64_parse_subargs(t_base64_args *args, int ac, char **av)
 	{
 		args->av_i++;
 		if (args->av_i >= ac)
-		{
-			ft_printf("argument -i needs an input file after it\n");
-			return (1);
-		}
+			return (print_error("argument -i needs an input file after it\n"));
 		args->input_file = av[args->av_i];
 	}
 	else if (ft_strcmp(av[args->av_i], "-o") == 0)
 	{
 		args->av_i++;
 		if (args->av_i >= ac)
-		{
-			ft_printf("argment -o needs an output file after it\n");
-			return (1);
-		}
+			return (print_error("argment -o needs an output file after it\n"));
 		args->output_file = av[args->av_i];
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 21:39:02 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 23:45:34 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 01:13:41 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ uint64_t	reverse_bits(uint64_t in)
 	return (ret);
 }
 
-uint32_t		uint32_t_reverse_bits(uint32_t in)
+uint32_t	uint32_t_reverse_bits(uint32_t in)
 {
 	size_t		i;
 	uint32_t	ret;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 21:52:26 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 01:22:24 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 int				print_hash_usage(void);
 int				print_base64_usage(void);
 int				print_commands(char *name);
-void			print_errno(char *buf);
+int				print_errno(char *str);
+int				print_error(char *str);
 char			*print_bits(void *bytes, size_t size);
 uint64_t		reverse_bits(uint64_t in);
 uint32_t		uint32_t_reverse_bits(uint32_t in);
