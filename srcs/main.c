@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/02 01:00:02 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 01:11:47 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,9 @@ int			print_base64_usage(void)
 	return (1);
 }
 
-#include <ft_ssl_des.h>
-#include <ft_ssl_base64.h>
-
 int			main(int argc, char **argv)
 {
-	size_t	salt_size;
-	uint8_t	*salt = ft_char_to_hex(argv[2], &salt_size);
-	if (salt == NULL)
-	{
-		ft_printf("salt is invalid, expected hex format\n");
-		return (1);
-	}
-	uint8_t	*ret = pbkdf2_hmac_sha256(argv[1], salt, salt_size, 32);
-	ft_printf("hex: ");
-	for (int i = 0; i < 32; i++) {
-		ft_printf("%x", ret[i]);
-	}
-	ft_printf("\n");
-	size_t size;
-	char *base64 = enc_base64((char *)ret, 32, &size);
-	ft_printf("base64: %s\n", base64);
-	free(salt);
-	free(ret);
-	free(base64);
-
-	/*if (argc == 1)
+	if (argc == 1)
 		return (print_commands(NULL));
 	if (ft_strcmp(argv[1], "md5") == 0
 		|| ft_strcmp(argv[1], "sha256") == 0
@@ -73,5 +50,5 @@ int			main(int argc, char **argv)
 	else if (ft_strcmp(argv[1], "base64") == 0)
 		return (base64_arg_parsing(argc, argv));
 	else
-		return (print_commands(argv[1]));*/
+		return (print_commands(argv[1]));
 }

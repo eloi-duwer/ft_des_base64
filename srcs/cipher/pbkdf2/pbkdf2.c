@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 20:48:41 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/02 00:53:50 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 01:04:09 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ uint8_t	*calc_block(char *password, uint8_t *salt, \
 	if ((buffs[2] = (uint8_t *)malloc(32)) == NULL)
 		return (NULL);
 	iter = 0;
-	while (iter < 256)
+	while (iter < 8196)
 	{
 		buffs[1] = hmac_sha256(password, buffs[0], \
 			iter == 0 ? salt_len + sizeof(uint32_t) : 32);
@@ -48,7 +48,6 @@ uint8_t	*calc_block(char *password, uint8_t *salt, \
 		iter++;
 	}
 	free(buffs[1]);
-	ft_printf("%x\n", buffs[2][0]);
 	return (buffs[2]);
 }
 
