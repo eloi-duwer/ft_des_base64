@@ -1,23 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl_des.h                                       :+:      :+:    :+:   */
+/*   reverse_bits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 23:43:10 by eduwer           ###   ########.fr       */
+/*   Created: 2020/12/31 21:39:02 by eduwer            #+#    #+#             */
+/*   Updated: 2020/12/31 23:45:34 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SSL_DES_H
-# define FT_SSL_DES_H
+#include <ft_ssl.h>
 
-# include <stdint.h>
-# include <stddef.h>
+uint64_t	reverse_bits(uint64_t in)
+{
+	int			i;
+	uint64_t	ret;
 
-uint8_t		*pbkdf2_hmac_sha256(char *password, uint8_t *salt, \
-				size_t salt_len, size_t dk_len);
-uint8_t		*hmac_sha256(char *password, uint8_t *msg, size_t msg_len);
+	i = 0;
+	ret = 0;
+	while (i < 64 / 8)
+	{
+		ret = ret << 8;
+		ret |= (in >> (i * 8)) & 0xFF;
+		i++;
+	}
+	return (ret);
+}
 
-# endif
+uint32_t		uint32_t_reverse_bits(uint32_t in)
+{
+	size_t		i;
+	uint32_t	ret;
+
+	i = 0;
+	ret = 0;
+	while (i < 32 / 8)
+	{
+		ret = ret << 8;
+		ret |= (in >> (i * 8)) & 0xFF;
+		i++;
+	}
+	return (ret);
+}

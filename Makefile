@@ -11,7 +11,8 @@
 # **************************************************************************** #
 
 SRC_NAME = main.c \
-	helpers.c \
+	helpers/helpers.c \
+	helpers/reverse_bits.c \
 	hash/hash_parse_args.c \
 	hash/hash_process.c \
 	hash/md5/md5.c \
@@ -28,7 +29,8 @@ SRC_NAME = main.c \
 	cipher/base64/base64_parse_args.c \
 	cipher/base64/get_enc_char.c \
 	cipher/base64/get_dec_char.c \
-	cipher/pbkdf2/hmac/hmac.c
+	cipher/pbkdf2/pbkdf2.c \
+	cipher/pbkdf2/hmac/hmac_sha256.c
 
 NAME = ft_ssl
 

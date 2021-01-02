@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:21:12 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/30 17:25:49 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/02 00:57:06 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*enc_base64(char *str, size_t size, size_t *ret_size)
 	nb_groups = size / 3;
 	padding = (size % 3 != 0) * (3 - (size % 3));
 	*ret_size = (nb_groups + (padding > 0)) * 4;
-	if ((ret = (char *)ft_memalloc(*ret_size)) == NULL)
+	if ((ret = (char *)ft_memalloc(*ret_size + 1)) == NULL)
 		return (NULL);
 	i = 0;
 	while (i < nb_groups * 4)

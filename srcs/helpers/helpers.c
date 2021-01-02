@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 17:52:03 by eduwer            #+#    #+#             */
-/*   Updated: 2020/03/02 22:09:48 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/31 22:29:02 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ void		print_errno(char *buf)
 	ft_fdprintf(2, "%s %s\n", buf, errstr);
 }
 
-uint64_t	reverse_bits(uint64_t in)
+void		xor_array(void *inout, void *b, size_t size)
 {
-	int			i;
-	uint64_t	ret;
+	unsigned char	*ptr_a;
+	unsigned char	*ptr_b;
 
-	i = 0;
-	ret = 0;
-	while (i < 64 / 8)
+	ptr_a = (unsigned char *)inout;
+	ptr_b = (unsigned char *)b;
+	while (size > 0)
 	{
-		ret = ret << 8;
-		ret |= (in >> (i * 8)) & 0xFF;
-		++i;
+		*ptr_a ^= *ptr_b;
+		ptr_a++;
+		ptr_b++;
+		size--;
 	}
-	return (ret);
 }

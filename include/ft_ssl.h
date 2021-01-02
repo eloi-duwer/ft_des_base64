@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 15:23:10 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/30 18:56:12 by eduwer           ###   ########.fr       */
+/*   Updated: 2020/12/31 21:52:26 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int				print_commands(char *name);
 void			print_errno(char *buf);
 char			*print_bits(void *bytes, size_t size);
 uint64_t		reverse_bits(uint64_t in);
+uint32_t		uint32_t_reverse_bits(uint32_t in);
 uint32_t		left_rotate(uint32_t buff, unsigned int amount);
 uint32_t		right_rotate(uint32_t buff, unsigned int amount);
+void			xor_array(void *inout, void *b, size_t size);
 int				hash_arg_parsing(int ac, char **av);
 int				base64_arg_parsing(int ac, char **av);
 
