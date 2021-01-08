@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 18:50:39 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/31 23:39:42 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 04:38:26 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl_hash.h>
 #include <ft_ssl_des.h>
 
-static uint8_t	*get_key(uint8_t *password, size_t size)
+static uint8_t	*hmac_get_key(uint8_t *password, size_t size)
 {
 	uint8_t	*ret;
 
@@ -38,7 +38,7 @@ uint8_t			*hmac_sha256(char *password, uint8_t *msg, size_t msg_len)
 	int		i;
 	uint8_t	*buff;
 
-	if ((key = get_key((uint8_t *)password, ft_strlen(password))) == NULL)
+	if ((key = hmac_get_key((uint8_t *)password, ft_strlen(password))) == NULL)
 		return (NULL);
 	i = 0;
 	while (i < 64)

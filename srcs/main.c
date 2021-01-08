@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 03:51:06 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 16:44:10 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			print_commands(char *name)
 		ft_fdprintf(2, "Usage: ./ft_ssl <command>\n\n");
 	ft_fdprintf(2, "Standart commands:\n\n");
 	ft_fdprintf(2, "Message Digest commands:\nmd5\nsha256\nsha384\nsha512\n\n");
-	ft_fdprintf(2, "Cipher commands:\nbase64\ndes\ndes-cbc\ndes-ecb");
+	ft_fdprintf(2, "Cipher commands:\nbase64\ndes\ndes-cbc\ndes-ecb\n");
 	return (1);
 }
 
@@ -45,6 +45,8 @@ int			print_des_usage(void)
 [-v hex initialization vector]\n");
 	return (1);
 }
+
+#include <ft_ssl_des.h>
 
 int			main(int argc, char **argv)
 {

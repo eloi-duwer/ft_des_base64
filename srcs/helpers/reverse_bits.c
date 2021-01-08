@@ -6,13 +6,13 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 21:39:02 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 02:35:59 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 16:51:14 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 
-uint64_t	reverse_bits(uint64_t in)
+uint64_t	reverse_bits_u64(uint64_t in)
 {
 	int			i;
 	uint64_t	ret;

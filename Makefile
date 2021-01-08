@@ -34,6 +34,8 @@ SRC_NAME = main.c \
 	cipher/pbkdf2/hmac/hmac_sha256.c \
 	cipher/des/des_parse_args.c \
 	cipher/des/des_process.c \
+	cipher/des/get_salt.c \
+	cipher/des/get_key.c \
 	cipher/des/subkeys.c
 
 NAME = ft_ssl

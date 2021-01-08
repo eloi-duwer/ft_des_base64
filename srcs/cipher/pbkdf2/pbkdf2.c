@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 20:48:41 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 01:59:47 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 05:05:50 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 #include <stdio.h>
 
-uint8_t	*calc_block(char *password, uint8_t *salt, \
+static uint8_t	*calc_block(char *password, uint8_t *salt, \
 	size_t salt_len, uint32_t be_i)
 {
 	uint8_t	*buffs[3];
@@ -35,7 +35,7 @@ uint8_t	*calc_block(char *password, uint8_t *salt, \
 	if ((buffs[2] = (uint8_t *)malloc(32)) == NULL)
 		return (NULL);
 	iter = 0;
-	while (iter < 8196)
+	while (iter < 8192)
 	{
 		buffs[1] = hmac_sha256(password, buffs[0], \
 			iter == 0 ? salt_len + sizeof(uint32_t) : 32);
@@ -58,7 +58,7 @@ uint8_t	*calc_block(char *password, uint8_t *salt, \
 **	2 : return buffer
 */
 
-uint8_t	*pbkdf2_hmac_sha256(char *password, uint8_t *salt, size_t salt_len, \
+uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, size_t salt_len, \
 	size_t dk_len_bytes)
 {
 	uint8_t	*buffs[3];
