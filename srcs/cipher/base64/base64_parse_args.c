@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/02 01:22:09 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/03 01:11:50 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			base64_arg_parsing(int ac, char **av)
 		}
 		else
 		{
-			ft_printf("Extra operand: '%s'\n", av[args.av_i]);
+			ft_fdprintf(2, "Extra operand: '%s'\n", av[args.av_i]);
 			return (1);
 		}
 		args.av_i++;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 20:48:41 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/02 01:04:09 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 01:59:47 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ uint8_t	*pbkdf2_hmac_sha256(char *password, uint8_t *salt, size_t salt_len, \
 	while (i != dk_len_bytes / 32)
 	{
 		if ((buffs[0] = calc_block(password, salt, salt_len, \
-			uint32_t_reverse_bits(i + 1))) == NULL \
+			reverse_bits_u32(i + 1))) == NULL \
 			|| (buffs[1] = ft_memcat(buffs[2], i * 32, buffs[0], 32)) == NULL)
 			return (NULL);
 		free(buffs[2]);
