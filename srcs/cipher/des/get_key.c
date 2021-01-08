@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 04:04:28 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 16:39:07 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 17:23:56 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	get_password(t_des_args *ctx)
 	tcsetattr(0, TCSAFLUSH, &old);
 }
 
+#include <ft_ssl_base64.h>
+
 void	get_key(t_des_args *ctx)
 {
 	uint8_t	*key;
@@ -55,7 +57,7 @@ void	get_key(t_des_args *ctx)
 	
 	if (ctx->password == NULL)
 		get_password(ctx);
-	if ((key = pbkdf2_hmac_sha256(ctx->password, (uint8_t *)&ctx->salt, 8, 64)) == NULL)
+	if ((key = pbkdf2_hmac_sha256(ctx->password, (uint8_t *)&ctx->salt, 8, 8)) == NULL)
 	{
 		print_errno("Can't generate key: ");
 		exit(1);

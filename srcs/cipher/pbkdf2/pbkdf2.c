@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 20:48:41 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 05:05:50 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 17:21:29 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static uint8_t	*calc_block(char *password, uint8_t *salt, \
 **	0 : result of calc_t
 **	1 : return of the concatenation
 **	2 : return buffer
+**	Salt is expected high endian, if provided by the user
 */
 
 uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, size_t salt_len, \
@@ -64,14 +65,9 @@ uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, size_t salt_len, \
 	uint8_t	*buffs[3];
 	size_t	i;
 
-	if (dk_len_bytes % 32 != 0)
-	{
-		ft_fdprintf(2, "dk_len must be a multiple of 32 bytes\n");
-		return (NULL);
-	}
 	i = 0;
 	buffs[2] = NULL;
-	while (i != dk_len_bytes / 32)
+	while (i != (dk_len_bytes / 32) + (dk_len_bytes % 32 != 0))
 	{
 		if ((buffs[0] = calc_block(password, salt, salt_len, \
 			reverse_bits_u32(i + 1))) == NULL \
