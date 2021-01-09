@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 20:48:41 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 17:21:29 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:16:11 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static uint8_t	*calc_block(char *password, uint8_t *salt, \
 **	Salt is expected high endian, if provided by the user
 */
 
-uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, size_t salt_len, \
-	size_t dk_len_bytes)
+uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, \
+					size_t salt_len, size_t dk_len_bytes)
 {
 	uint8_t	*buffs[3];
 	size_t	i;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:29:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 00:46:40 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:17:42 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static uint64_t	join_subkeys(uint32_t one, uint32_t two)
 	return (ret);
 }
 
-void		gen_subkeys(t_des_args *ctx)
+void			gen_subkeys(t_des_args *ctx)
 {
 	uint64_t	subkey_pc1;
 	uint32_t	halves[2];

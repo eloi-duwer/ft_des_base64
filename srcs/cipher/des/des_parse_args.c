@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:05:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/07 19:52:08 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:12:27 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	get_arg(t_des_args *args, char **pt, char *errstr)
 	return (0);
 }
 
-static int continue_des_parse_subargs(t_des_args *args)
+static int	continue_des_parse_subargs(t_des_args *args)
 {
 	if (ft_strcmp(args->av[args->av_i], "-k") == 0)
 	{
@@ -88,7 +88,7 @@ static int	get_des_alg(t_des_args *args, char *str)
 
 int			des_args_parsing(int ac, char **av)
 {
-	t_des_args args;
+	t_des_args	args;
 
 	ft_bzero(&args, sizeof(t_des_args));
 	args.ac = ac;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:03:07 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:17:17 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static const uint8_t	g_ip[64] = {
 	60, 52, 44, 36, 28, 20, 12, 4,
 	62, 54, 46, 38, 30, 22, 14, 6,
 	64, 56, 48, 40, 32, 24, 16, 8,
-	57, 49, 41, 33, 25, 17,  9, 1,
+	57, 49, 41, 33, 25, 17, 9, 1,
 	59, 51, 43, 35, 27, 19, 11, 3,
-	61, 53, 45, 37, 29, 21, 13, 5, 
+	61, 53, 45, 37, 29, 21, 13, 5,
 	63, 55, 47, 39, 31, 23, 15, 7
 };
 
@@ -76,7 +76,7 @@ static const uint8_t	g_rip[64] = {
 	33, 1, 41, 9, 49, 17, 57, 25
 };
 
-static const uint8_t	expand[48] = {
+static const uint8_t	g_expand[48] = {
 	32, 1, 2, 3, 4, 5,
 	4, 5, 6, 7, 8, 9,
 	8, 9, 10, 11, 12, 13,
@@ -92,7 +92,7 @@ static uint32_t	func(uint32_t half, uint64_t subkey)
 	uint64_t	expanded_half;
 
 	expanded_half = ((uint64_t)half) << 32;
-	expanded_half = swap_bits_u64(expanded_half, expand, 48);
+	expanded_half = swap_bits_u64(expanded_half, g_expand, 48);
 	expanded_half = subkey ^ expanded_half;
 	return (s_boxes(expanded_half));
 }
@@ -121,7 +121,8 @@ static int		des_loop_blocks(t_des_args *ctx)
 			halves[0][0] = halves[1][0];
 			halves[0][1] = halves[1][1];
 		}
-		des_write_to_file(ctx, swap_bits_u64(((uint64_t)halves[0][1] << 32) | halves[0][0], g_rip, 64));
+		des_write_to_file(ctx, swap_bits_u64(\
+			((uint64_t)halves[0][1] << 32) | halves[0][0], g_rip, 64));
 	}
 	return (0);
 }
@@ -135,14 +136,13 @@ int				des_process(t_des_args *ctx)
 	if (ctx->iv_str != NULL && (ctx->has_iv = true))
 		ctx->iv = ft_char_to_hex_u64(ctx->iv_str);
 	ctx->fd_in = 0;
-	if (ctx->filename_in != NULL && (ctx->fd_in = open(ctx->filename_in, O_RDONLY)) == -1)
+	if (ctx->filename_in != NULL && \
+		(ctx->fd_in = open(ctx->filename_in, O_RDONLY)) == -1)
 		return (print_errno("Can't open input file: "));
 	ctx->fd_out = 1;
-	if (ctx->filename_out != NULL && (ctx->fd_out = open(ctx->filename_out, O_WRONLY)) == -1)
+	if (ctx->filename_out != NULL && \
+		(ctx->fd_out = open(ctx->filename_out, O_WRONLY)) == -1)
 		return (print_errno("Can't open output file: "));
-	//FOR DEBUG PURPOSES ONLY, SEE http://page.math.tu-berlin.de/~kant/teachinghess/krypto-ws2006/des.htm
-	ctx->has_key = true;
-	ctx->key = 0x133457799BBCDFF1;
 	if (ctx->has_salt == false)
 		get_salt(ctx);
 	if (ctx->has_key == false)

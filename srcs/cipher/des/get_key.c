@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 04:04:28 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 22:22:26 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:15:36 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <termios.h>
 
 /*
-** As getpass is considered obsolete, this is the 
+** As getpass is considered obsolete, this is the
 ** recommended minimal implementation taken from
 ** https://www.gnu.org/software/libc/manual/html_node/getpass.html
 */
@@ -39,14 +39,15 @@ static void	get_password(t_des_args *ctx)
 	tcsetattr(0, TCSAFLUSH, &old);
 }
 
-void	get_key(t_des_args *ctx)
+void		get_key(t_des_args *ctx)
 {
 	uint8_t	*key;
 	int		i;
-	
+
 	if (ctx->password == NULL)
 		get_password(ctx);
-	if ((key = pbkdf2_hmac_sha256(ctx->password, (uint8_t *)&ctx->salt, 8, 8)) == NULL)
+	if ((key = pbkdf2_hmac_sha256(ctx->password, \
+		(uint8_t *)&ctx->salt, 8, 8)) == NULL)
 		exit(print_errno("Can't generate key: "));
 	ft_memset(ctx->password, 0, ft_strlen(ctx->password));
 	if (ctx->password_malloced == true)

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 01:19:58 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/08 22:21:28 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:16:32 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 **	Prints the bits in the byte array, on high-endian style
 */
+
 char		*print_bits(void *bytes, size_t size)
 {
 	int				i;
@@ -30,7 +31,8 @@ char		*print_bits(void *bytes, size_t size)
 		i = 7;
 		while (i >= 0)
 		{
-			ret[(j * 9) + (7 - i)] = (ptr[(size - 1) - j] & (0x1 << i & 0xFF)) ? '1' : '0';
+			ret[(j * 9) + (7 - i)] = (ptr[(size - 1) - j] & \
+				(0x1 << i & 0xFF)) ? '1' : '0';
 			--i;
 		}
 		if (j < size - 1)

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 23:31:40 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 00:46:10 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/09 01:15:54 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ uint32_t	s_boxes(uint64_t n)
 			[(six_bits & 0b11110) >> 1];
 		ret = (ret << 4) | subtitute;
 	}
-	return swap_bits_u32(ret, g_perm, 32);
+	return (swap_bits_u32(ret, g_perm, 32));
 }
