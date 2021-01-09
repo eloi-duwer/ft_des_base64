@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:16:21 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/30 17:34:05 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/08 22:23:10 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*open_and_read_file(t_hash_args *args, \
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_asprintf(&err, "ft_ssl: %s: ", file_name);
+		ft_asprintf(&err, "ft_ssl: can't open %s: ", file_name);
 		print_errno(err);
 		free(err);
 		args->return_status = 1;
