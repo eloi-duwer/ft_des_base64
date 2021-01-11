@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/11 01:00:28 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/11 01:13:18 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ int				des_process(t_des_args *ctx)
 		(ctx->fd_in = open(ctx->filename_in, O_RDONLY)) == -1)
 		return (print_errno("Can't open input file: "));
 	ctx->fd_out = 1;
-	if (ctx->filename_out != NULL && \
-		(ctx->fd_out = open(ctx->filename_out, O_WRONLY)) == -1)
+	if (ctx->filename_out != NULL && (ctx->fd_out = \
+		open(ctx->filename_out, O_WRONLY | O_CREAT | O_TRUNC)) == -1)
 		return (print_errno("Can't open output file: "));
 	if (ctx->has_key == false && ctx->password == NULL)
 		get_password(ctx);

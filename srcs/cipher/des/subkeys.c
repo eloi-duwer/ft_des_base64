@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:29:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:17:42 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/11 01:09:49 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			gen_subkeys(t_des_args *ctx)
 	{
 		halves[0] = lrotate_subkey(halves[0], i);
 		halves[1] = lrotate_subkey(halves[1], i);
-		ctx->subkeys[i] = swap_bits_u64(join_subkeys(halves[0], halves[1]), \
+		ctx->subkeys[ctx->decode ? 15 - i : i] = swap_bits_u64(join_subkeys(halves[0], halves[1]), \
 			g_pc_2, 48);
 	}
 }
