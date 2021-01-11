@@ -37,7 +37,8 @@ SRC_NAME = main.c \
 	cipher/des/get_salt.c \
 	cipher/des/get_key.c \
 	cipher/des/subkeys.c \
-	cipher/des/s_boxes.c
+	cipher/des/s_boxes.c \
+	cipher/des/des_write.c
 
 NAME = ft_ssl
 

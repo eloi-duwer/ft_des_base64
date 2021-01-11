@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:17:17 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/11 01:00:28 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool		des_get_next_block(t_des_args *ctx, uint64_t *block)
 	if (ret >= 0 && ret < 8)
 	{
 		close(ctx->fd_in);
-		ctx->fd_in = 0;
+		ctx->fd_in = -1;
 	}
 	if (ret == 0)
 		return (false);
@@ -39,11 +39,6 @@ static bool		des_get_next_block(t_des_args *ctx, uint64_t *block)
 		i++;
 	}
 	return (true);
-}
-
-static void		des_write_to_file(t_des_args *ctx, uint64_t block)
-{
-	ft_printf("%lX\n", block);
 }
 
 /*
@@ -108,6 +103,7 @@ static int		des_loop_blocks(t_des_args *ctx)
 	uint32_t	halves[2][2];
 	int			i;
 
+	des_write_salt_to_file(ctx);
 	while (des_get_next_block(ctx, &block))
 	{
 		block = swap_bits_u64(block, g_ip, 64);
@@ -124,6 +120,8 @@ static int		des_loop_blocks(t_des_args *ctx)
 		des_write_to_file(ctx, swap_bits_u64(\
 			((uint64_t)halves[0][1] << 32) | halves[0][0], g_rip, 64));
 	}
+	des_empty_buffer(ctx);
+	close(ctx->fd_out);
 	return (0);
 }
 
@@ -143,8 +141,9 @@ int				des_process(t_des_args *ctx)
 	if (ctx->filename_out != NULL && \
 		(ctx->fd_out = open(ctx->filename_out, O_WRONLY)) == -1)
 		return (print_errno("Can't open output file: "));
-	if (ctx->has_salt == false)
-		get_salt(ctx);
+	if (ctx->has_key == false && ctx->password == NULL)
+		get_password(ctx);
+	get_salt(ctx);
 	if (ctx->has_key == false)
 		get_key(ctx);
 	gen_subkeys(ctx);

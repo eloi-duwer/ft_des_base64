@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 04:04:28 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:15:36 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/11 01:07:05 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** https://www.gnu.org/software/libc/manual/html_node/getpass.html
 */
 
-static void	get_password(t_des_args *ctx)
+void		get_password(t_des_args *ctx)
 {
 	struct termios old;
 	struct termios new;
@@ -44,8 +44,6 @@ void		get_key(t_des_args *ctx)
 	uint8_t	*key;
 	int		i;
 
-	if (ctx->password == NULL)
-		get_password(ctx);
 	if ((key = pbkdf2_hmac_sha256(ctx->password, \
 		(uint8_t *)&ctx->salt, 8, 8)) == NULL)
 		exit(print_errno("Can't generate key: "));

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:18:32 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/11 00:57:44 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ typedef enum	e_des_alg
 	ecb,
 	cbc
 }				t_des_alg;
+
+/*
+**	MUST be a multiple of 3, as the buffers will be used to stock data BEFORE
+** 	base64 conversion, if needed. base64 encodes characters by groups of 3, if
+**	it is not a multiple of 3 padding characters (= or ==) can be written in the
+**	Middle of the file, and it's invalid
+*/
+
+# define DES_BUFF_SIZE 4608
 
 typedef struct	s_des_args {
 	int			ac;
@@ -47,6 +56,8 @@ typedef struct	s_des_args {
 	bool		has_iv;
 	uint64_t	iv;
 	uint64_t	subkeys[16];
+	uint8_t		w_buff[DES_BUFF_SIZE];
+	size_t		w_buff_size;
 }				t_des_args;
 
 uint8_t			*pbkdf2_hmac_sha256(char *password, uint8_t *salt, \
@@ -56,6 +67,10 @@ void			gen_subkeys(t_des_args *ctx);
 uint32_t		s_boxes(uint64_t n);
 void			get_salt(t_des_args *ctx);
 void			get_key(t_des_args *ctx);
+void			get_password(t_des_args *ctx);
 int				des_process(t_des_args *args);
+void			des_write_to_file(t_des_args *ctx, uint64_t block);
+void			des_write_salt_to_file(t_des_args *ctx);
+void			des_empty_buffer(t_des_args *ctx);
 
 #endif
