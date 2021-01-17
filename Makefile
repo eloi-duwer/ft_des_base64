@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/01/15 15:33:56 by eduwer           ###   ########.fr        #
+#    Updated: 2021/01/16 03:30:07 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,12 @@ SRC_NAME = main.c \
 	cipher/pbkdf2/hmac/hmac_sha256.c \
 	cipher/des/des_parse_args.c \
 	cipher/des/des_process.c \
-	cipher/des/get_salt.c \
-	cipher/des/get_key.c \
+	cipher/des/get_salt_key.c \
 	cipher/des/subkeys.c \
 	cipher/des/s_boxes.c \
-	cipher/des/des_write.c
+	cipher/des/des_write.c \
+	cipher/des/des_alg.c \
+	cipher/des/des_read.c
 
 NAME = ft_ssl
 

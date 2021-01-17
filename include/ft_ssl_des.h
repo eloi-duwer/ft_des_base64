@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/11 00:57:44 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/16 03:47:49 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct	s_des_args {
 	bool		decode;
 	char		*filename_in;
 	int			fd_in;
+	bool		next_block_is_last;
+	uint64_t	n_bl;
+	bool		finished_reading;
 	char		*filename_out;
 	int			fd_out;
 	bool		password_malloced;
@@ -72,5 +75,8 @@ int				des_process(t_des_args *args);
 void			des_write_to_file(t_des_args *ctx, uint64_t block);
 void			des_write_salt_to_file(t_des_args *ctx);
 void			des_empty_buffer(t_des_args *ctx);
+int				des_loop_blocks(t_des_args *ctx);
+bool			des_get_next_block(t_des_args *ctx, uint64_t *bl);
+void			des_init_next_block(t_des_args *ctx);
 
 #endif

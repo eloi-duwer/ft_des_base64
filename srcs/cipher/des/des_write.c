@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 23:55:31 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/11 01:06:56 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/17 13:34:35 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,19 @@ static void	des_write_bufferized(t_des_args *ctx, uint8_t *buff, \
 
 void		des_write_to_file(t_des_args *ctx, uint64_t block)
 {
+	uint8_t	n_pad;
+
 	block = reverse_bits_u64(block);
-	des_write_bufferized(ctx, (uint8_t *)(&block), 8);
+	if (ctx->decode == true && ctx->finished_reading == true)
+	{
+		n_pad = ((uint8_t *)&block)[7];
+		if (n_pad <= 8)
+			des_write_bufferized(ctx, (uint8_t *)(&block), \
+				8 - n_pad);
+	}
+	else
+		des_write_bufferized(ctx, (uint8_t *)(&block), 8);
+	
 }
 
 void		des_write_salt_to_file(t_des_args *ctx)
@@ -75,5 +86,5 @@ void		des_write_salt_to_file(t_des_args *ctx)
 		return ;
 	salt = reverse_bits_u64(ctx->salt);
 	des_write_bufferized(ctx, (uint8_t *)"Salted__", 8);
-	des_write_bufferized(ctx, (uint8_t *)(&salt), 8);
+	des_write_bufferized(ctx, (uint8_t *)&salt, 8);
 }

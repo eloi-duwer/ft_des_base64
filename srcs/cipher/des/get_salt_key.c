@@ -1,18 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_key.c                                          :+:      :+:    :+:   */
+/*   get_salt_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/08 04:04:28 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/11 01:07:05 by eduwer           ###   ########.fr       */
+/*   Created: 2021/01/08 03:59:35 by eduwer            #+#    #+#             */
+/*   Updated: 2021/01/16 03:47:00 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_ssl.h>
+#include <sys/random.h>
 #include <ft_ssl_des.h>
+#include <ft_ssl.h>
 #include <termios.h>
+
+/*
+**	If decoding, salt is necessarily in arg or in the file.
+**	(we do not handle -nosalt)
+**	If encoding, we can generate salt if none provided
+*/
+
+void	get_salt(t_des_args *ctx)
+{
+	char	str[16];
+
+	if (ctx->decode == true)
+	{
+		if (read(ctx->fd_in, str, 16) != 16 \
+			|| ft_strncmp(str, "Salted__", 8) != 0)
+			exit(print_error("Error while reading: bad file format"));
+		ft_memcpy(&ctx->salt, &str[8], 8);
+		ctx->salt = reverse_bits_u64(ctx->salt);
+		
+	}
+	else if (ctx->has_salt == false)
+		getrandom(&ctx->salt, 8, 0);
+	ctx->has_salt = true;
+}
 
 /*
 ** As getpass is considered obsolete, this is the
@@ -41,11 +66,13 @@ void		get_password(t_des_args *ctx)
 
 void		get_key(t_des_args *ctx)
 {
-	uint8_t	*key;
-	int		i;
+	uint8_t		*key;
+	uint64_t	salt;
+	int			i;
 
+	salt = reverse_bits_u64(ctx->salt);
 	if ((key = pbkdf2_hmac_sha256(ctx->password, \
-		(uint8_t *)&ctx->salt, 8, 8)) == NULL)
+		(uint8_t *)&salt, 8, 8)) == NULL)
 		exit(print_errno("Can't generate key: "));
 	ft_memset(ctx->password, 0, ft_strlen(ctx->password));
 	if (ctx->password_malloced == true)
