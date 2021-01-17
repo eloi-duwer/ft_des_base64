@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 23:55:31 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 13:34:35 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/17 16:31:47 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void		des_empty_buffer(t_des_args *ctx)
 
 	if (ctx->w_buff_size == 0)
 		return ;
-	if (ctx->base64 == true)
-		str = (uint8_t *)enc_base64((char *)ctx->w_buff, \
-			ctx->w_buff_size, &size);
+	if (ctx->decode == false && ctx->base64 == true)
+	{
+		if ((str = (uint8_t *)enc_base64((char *)ctx->w_buff, \
+			ctx->w_buff_size, &size)) == NULL)
+			exit(print_errno("Error while encoding to base64: "));
+	}
 	else
 	{
 		str = ctx->w_buff;
@@ -33,7 +36,7 @@ void		des_empty_buffer(t_des_args *ctx)
 		exit(print_errno("Error while writing: "));
 	ctx->w_buff_size = 0;
 	ft_memset(ctx->w_buff, 0, ctx->w_buff_size);
-	if (ctx->base64 == true)
+	if (ctx->decode == false && ctx->base64 == true)
 		free(str);
 }
 
@@ -72,10 +75,11 @@ void		des_write_to_file(t_des_args *ctx, uint64_t block)
 		if (n_pad <= 8)
 			des_write_bufferized(ctx, (uint8_t *)(&block), \
 				8 - n_pad);
+		else
+			des_write_bufferized(ctx, (uint8_t *)(&block), 8);
 	}
 	else
 		des_write_bufferized(ctx, (uint8_t *)(&block), 8);
-	
 }
 
 void		des_write_salt_to_file(t_des_args *ctx)

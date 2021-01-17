@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:13:04 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/16 03:48:36 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/17 17:34:22 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static const uint8_t	g_expand[48] = {
 	28, 29, 30, 31, 32, 1
 };
 
-static uint32_t	func(uint32_t half, uint64_t subkey)
+static uint32_t	swap_boxes(uint32_t half, uint64_t subkey)
 {
 	uint64_t	expanded_half;
 
@@ -69,30 +69,52 @@ static uint32_t	func(uint32_t half, uint64_t subkey)
 ** For the current round and the precendent
 */
 
-int					des_loop_blocks(t_des_args *ctx)
+static uint64_t	des_enc(t_des_args *ctx, uint64_t block)
+{
+	int			i;
+	uint32_t	halves[2][2];
+
+	block = swap_bits_u64(block, g_ip, 64);
+	halves[0][0] = block >> 32;
+	halves[0][1] = block & 0xFFFFFFFF;
+	i = 0;
+	while (i < 16)
+	{
+		halves[1][0] = halves[0][1];
+		halves[1][1] = halves[0][0] ^ swap_boxes(halves[0][1], ctx->subkeys[i]);
+		halves[0][0] = halves[1][0];
+		halves[0][1] = halves[1][1];
+		i++;
+	}
+	return (swap_bits_u64(((uint64_t)halves[0][1] << 32) | halves[0][0], \
+		g_rip, 64));
+}
+
+static void		des_block_handle_cbc(t_des_args *ctx, uint64_t block)
+{
+	uint64_t	ret;
+
+	if (ctx->alg == cbc && ctx->decode == false)
+	{
+		block = block ^ ctx->iv;
+		ctx->iv = block;
+	}
+	ret = des_enc(ctx, block);
+	if (ctx->alg == cbc && ctx->decode == true)
+	{
+		ret = ret ^ ctx->iv;
+		ctx->iv = ret;
+	}
+	des_write_to_file(ctx, ret);
+}
+
+int				des_loop_blocks(t_des_args *ctx)
 {
 	uint64_t	block;
-	uint32_t	halves[2][2];
-	int			i;
 
 	des_write_salt_to_file(ctx);
-	des_init_next_block(ctx);
 	while (des_get_next_block(ctx, &block))
-	{
-		block = swap_bits_u64(block, g_ip, 64);
-		halves[0][0] = block >> 32;
-		halves[0][1] = block & 0xFFFFFFFF;
-		i = -1;
-		while (++i < 16)
-		{
-			halves[1][0] = halves[0][1];
-			halves[1][1] = halves[0][0] ^ func(halves[0][1], ctx->subkeys[i]);
-			halves[0][0] = halves[1][0];
-			halves[0][1] = halves[1][1];
-		}
-		des_write_to_file(ctx, swap_bits_u64(\
-			((uint64_t)halves[0][1] << 32) | halves[0][0], g_rip, 64));
-	}
+		des_block_handle_cbc(ctx, block);
 	des_empty_buffer(ctx);
 	close(ctx->fd_out);
 	return (0);

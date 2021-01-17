@@ -6,14 +6,14 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/16 02:26:21 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/17 17:54:50 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 #include <ft_ssl_des.h>
 
-int				des_process(t_des_args *ctx)
+static int		conv_strs(t_des_args *ctx)
 {
 	if (ctx->key_str != NULL && (ctx->has_key = true))
 		ctx->key = ft_char_to_hex_u64(ctx->key_str);
@@ -29,13 +29,24 @@ int				des_process(t_des_args *ctx)
 	if (ctx->filename_out != NULL && (ctx->fd_out = \
 		open(ctx->filename_out, O_RDWR | O_CREAT | O_TRUNC, 0777)) == -1)
 		return (print_errno("Can't open output file: "));
+	return (0);
+}
+
+int				des_process(t_des_args *ctx)
+{
+	if (conv_strs(ctx) != 0)
+		return (1);
 	if (ctx->has_key == false && ctx->password == NULL)
 		get_password(ctx);
+	des_init_next_block(ctx);
 	get_salt(ctx);
+	if (ctx->alg != cbc && ctx->has_key == true && ctx->has_iv == false)
+		return (print_error("All des modes (except cbc) needs an iv"));
 	if (ctx->has_key == false)
-		get_key(ctx);
-	//ft_printf("Salt: %.16lX (%s)\n", ctx->salt, print_bits(&ctx->salt, 8));
-	//ft_printf("Key:  %.16lX (%s)\n", ctx->key, print_bits(&ctx->key, 8));
+		get_key_iv(ctx);
+	//ft_printf("Salt %.16lX\n", ctx->salt);
+	//ft_printf("Key  %.16lX\n", ctx->key);
+	//ft_printf("Iv   %.16lX\n", ctx->iv);
 	gen_subkeys(ctx);
 	return (des_loop_blocks(ctx));
 }

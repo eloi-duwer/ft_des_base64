@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:59:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/16 03:47:00 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/17 17:14:34 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@
 
 void	get_salt(t_des_args *ctx)
 {
-	char	str[16];
+	uint64_t	block;
 
 	if (ctx->decode == true)
 	{
-		if (read(ctx->fd_in, str, 16) != 16 \
-			|| ft_strncmp(str, "Salted__", 8) != 0)
+		des_get_next_block(ctx, &block);
+		block = reverse_bits_u64(block);
+		if (ft_strncmp((char *)&block, "Salted__", 8) != 0)
 			exit(print_error("Error while reading: bad file format"));
-		ft_memcpy(&ctx->salt, &str[8], 8);
-		ctx->salt = reverse_bits_u64(ctx->salt);
-		
+		des_get_next_block(ctx, &block);
+		ctx->salt = block;
 	}
 	else if (ctx->has_salt == false)
 		getrandom(&ctx->salt, 8, 0);
@@ -45,7 +45,7 @@ void	get_salt(t_des_args *ctx)
 ** https://www.gnu.org/software/libc/manual/html_node/getpass.html
 */
 
-void		get_password(t_des_args *ctx)
+void	get_password(t_des_args *ctx)
 {
 	struct termios old;
 	struct termios new;
@@ -64,21 +64,25 @@ void		get_password(t_des_args *ctx)
 	tcsetattr(0, TCSAFLUSH, &old);
 }
 
-void		get_key(t_des_args *ctx)
+void	get_key_iv(t_des_args *ctx)
 {
-	uint8_t		*key;
+	uint8_t		*key_iv;
 	uint64_t	salt;
 	int			i;
 
 	salt = reverse_bits_u64(ctx->salt);
-	if ((key = pbkdf2_hmac_sha256(ctx->password, \
-		(uint8_t *)&salt, 8, 8)) == NULL)
+	if ((key_iv = pbkdf2_hmac_sha256(ctx->password, \
+		(uint8_t *)&salt, 8, 16)) == NULL)
 		exit(print_errno("Can't generate key: "));
 	ft_memset(ctx->password, 0, ft_strlen(ctx->password));
 	if (ctx->password_malloced == true)
 		free(ctx->password);
 	i = -1;
 	while (++i < 8)
-		((uint8_t *)&ctx->key)[7 - i] = key[i];
-	free(key);
+	{
+		((uint8_t *)&ctx->key)[7 - i] = key_iv[i];
+		if (ctx->has_iv == false)
+			((uint8_t *)&ctx->iv)[7 - i] = key_iv[i + 8];
+	}
+	free(key_iv);
 }

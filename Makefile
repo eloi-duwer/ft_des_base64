@@ -6,7 +6,7 @@
 #    By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 13:12:01 by eduwer            #+#    #+#              #
-#    Updated: 2021/01/16 03:30:07 by eduwer           ###   ########.fr        #
+#    Updated: 2021/01/17 17:55:50 by eduwer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRC_NAME = main.c \
 	cipher/des/s_boxes.c \
 	cipher/des/des_write.c \
 	cipher/des/des_alg.c \
-	cipher/des/des_read.c
+	cipher/des/read/bufferization.c \
+	cipher/des/read/des_read.c
 
 NAME = ft_ssl
 

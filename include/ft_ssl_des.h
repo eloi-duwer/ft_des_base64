@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/16 03:47:49 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/01/17 17:47:38 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <libft.h>
+# include <unistd.h>
 
 typedef enum	e_des_alg
 {
@@ -59,6 +60,9 @@ typedef struct	s_des_args {
 	bool		has_iv;
 	uint64_t	iv;
 	uint64_t	subkeys[16];
+	uint8_t		r_buff[DES_BUFF_SIZE];
+	size_t		r_buff_size;
+	size_t		r_buff_used;
 	uint8_t		w_buff[DES_BUFF_SIZE];
 	size_t		w_buff_size;
 }				t_des_args;
@@ -69,7 +73,7 @@ uint8_t			*hmac_sha256(char *password, uint8_t *msg, size_t msg_len);
 void			gen_subkeys(t_des_args *ctx);
 uint32_t		s_boxes(uint64_t n);
 void			get_salt(t_des_args *ctx);
-void			get_key(t_des_args *ctx);
+void			get_key_iv(t_des_args *ctx);
 void			get_password(t_des_args *ctx);
 int				des_process(t_des_args *args);
 void			des_write_to_file(t_des_args *ctx, uint64_t block);
@@ -78,5 +82,6 @@ void			des_empty_buffer(t_des_args *ctx);
 int				des_loop_blocks(t_des_args *ctx);
 bool			des_get_next_block(t_des_args *ctx, uint64_t *bl);
 void			des_init_next_block(t_des_args *ctx);
+ssize_t			des_get_64_bits(t_des_args *ctx, uint64_t *bl);
 
 #endif
