@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:05:52 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:12:27 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:58:27 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,16 @@ static int	des_parse_subargs(t_des_args *args)
 {
 	if (ft_strcmp(args->av[args->av_i], "-e") == 0)
 		args->decode = false;
+	else if (ft_strcmp(args->av[args->av_i], "-h") == 0)
+		exit(print_des_usage() && 0);
 	else if (ft_strcmp(args->av[args->av_i], "-d") == 0)
 		args->decode = true;
+	else if (ft_strcmp(args->av[args->av_i], "--print_keys") == 0)
+		args->print_keys = true;
 	else if (ft_strcmp(args->av[args->av_i], "-a") == 0)
 		args->base64 = true;
+	else if (ft_strcmp(args->av[args->av_i], "--no_salt") == 0)
+		args->no_salt = true;
 	else if (ft_strcmp(args->av[args->av_i], "-i") == 0)
 	{
 		if (get_arg(args, &args->filename_in, "-i needs an input file") != 0)
@@ -77,12 +83,12 @@ static int	des_parse_subargs(t_des_args *args)
 
 static int	get_des_alg(t_des_args *args, char *str)
 {
-	if (ft_strncmp(str, "des", 3) == 0 || ft_strcmp(str, "des-ecb") == 0)
-		args->alg = ecb;
-	else if (ft_strncmp(str, "des", 3) == 0)
+	if (ft_strcmp(str, "des-cbc") == 0)
 		args->alg = cbc;
+	else if (ft_strcmp(str, "des-ecb") == 0)
+		args->alg = ecb;
 	else
-		return (print_des_usage());
+		args->alg = cbc;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:33:18 by eduwer            #+#    #+#             */
-/*   Updated: 2020/12/30 17:33:38 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:51:44 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	hash_parse_subargs(t_hash_args *args, int ac, char **av)
 			args->quiet = true;
 		else if (av[args->av_i][args->av_j] == 'r')
 			args->reverse = true;
+		else if (av[args->av_i][args->av_j] == 'h')
+			exit(print_hash_usage() && 0);
 		else if (av[args->av_i][args->av_j] == 'p')
 			process_stdin(args, false);
 		else if (av[args->av_i][args->av_j] == 's')

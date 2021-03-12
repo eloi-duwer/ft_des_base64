@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:13:04 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 17:34:22 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 12:30:26 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,25 @@ static uint64_t	des_enc(t_des_args *ctx, uint64_t block)
 static void		des_block_handle_cbc(t_des_args *ctx, uint64_t block)
 {
 	uint64_t	ret;
+	uint64_t	iv;
 
-	if (ctx->alg == cbc && ctx->decode == false)
+	if (ctx->alg == cbc)
 	{
-		block = block ^ ctx->iv;
-		ctx->iv = block;
+		if (ctx->decode == false)
+			block = block ^ ctx->iv;
+		else
+		{
+			iv = ctx->iv;
+			ctx->iv = block;
+		}
 	}
 	ret = des_enc(ctx, block);
-	if (ctx->alg == cbc && ctx->decode == true)
+	if (ctx->alg == cbc)
 	{
-		ret = ret ^ ctx->iv;
-		ctx->iv = ret;
+		if (ctx->decode == false)
+			ctx->iv = ret;
+		else
+			ret = ret ^ iv;
 	}
 	des_write_to_file(ctx, ret);
 }

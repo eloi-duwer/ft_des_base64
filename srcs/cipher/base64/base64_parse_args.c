@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:21:01 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/03 01:11:50 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:51:59 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	base64_parse_subargs(t_base64_args *args, int ac, char **av)
 		args->decode = false;
 	else if (ft_strcmp(av[args->av_i], "-d") == 0)
 		args->decode = true;
+	else if (ft_strcmp(av[args->av_i], "-h") == 0)
+		exit(print_base64_usage() && 0);
 	else if (ft_strcmp(av[args->av_i], "-i") == 0)
 	{
 		args->av_i++;

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 03:59:35 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 17:14:34 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:57:07 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <termios.h>
 
 /*
-**	If decoding, salt is necessarily in arg or in the file.
-**	(we do not handle -nosalt)
+**	If decoding, salt is in the header of the file, or in argument,
+**  or is not needed if we already have the key
 **	If encoding, we can generate salt if none provided
 */
 
@@ -27,12 +27,18 @@ void	get_salt(t_des_args *ctx)
 
 	if (ctx->decode == true)
 	{
-		des_get_next_block(ctx, &block);
-		block = reverse_bits_u64(block);
-		if (ft_strncmp((char *)&block, "Salted__", 8) != 0)
-			exit(print_error("Error while reading: bad file format"));
-		des_get_next_block(ctx, &block);
-		ctx->salt = block;
+		if (ctx->no_salt == false)
+		{
+			des_get_next_block(ctx, &block);
+			block = reverse_bits_u64(block);
+			if (ft_strncmp((char *)&block, "Salted__", 8) != 0)
+				exit(print_error("Error while reading: bad file format"));
+			des_get_next_block(ctx, &block);
+			ctx->salt = block;
+		}
+		else if (ctx->has_salt == false && ctx->has_key == false)
+			exit(print_error("des decryption needs salt if no key is provided \
+and option --no_salt is set"));
 	}
 	else if (ctx->has_salt == false)
 		getrandom(&ctx->salt, 8, 0);

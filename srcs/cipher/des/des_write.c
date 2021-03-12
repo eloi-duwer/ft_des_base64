@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 23:55:31 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 16:31:47 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:23:14 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		des_write_salt_to_file(t_des_args *ctx)
 {
 	uint64_t	salt;
 
-	if (ctx->decode == true)
+	if (ctx->decode == true || ctx->no_salt == true)
 		return ;
 	salt = reverse_bits_u64(ctx->salt);
 	des_write_bufferized(ctx, (uint8_t *)"Salted__", 8);

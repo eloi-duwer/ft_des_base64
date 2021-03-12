@@ -1,0 +1,19 @@
+To compare ECB encryption with Openssl, you must launch openssl with this paramteters:
+Key derivation alg: PBKDF2
+iteration count: 8192
+Hash algorith for PBKDF2: sha256
+
+For example,
+Encode with openssl:
+openssl des-cbc -in Makefile -out encrypted -iter 8192 -md sha256
+Decode with ft_ssl:
+./ft_ssl des-cbc -d -i encrypted
+
+You can also bypass this steps by providing directly the same encryption key (and initialization vector if needed) to both commands,
+or get the key / iv from encryption and provide it to the decryption programm
+
+Example:
+./ft_ssl des-cbc -i ft_ssl -o encrypted -k ABCDEF1234567890 -v DEADBEEF42424242 --no_salt
+(--no_salt because if we provide key and iv openssl does not expect salt at the beginning of the file)
+openssl des-cbc -d -in encrypted -out decrypted -K ABCDEF1234567890 -iv DEADBEEF42424242
+diff ft_ssl decrypted

@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 02:54:27 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 18:48:00 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 15:02:33 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,17 @@ int				des_process(t_des_args *ctx)
 		get_password(ctx);
 	des_init_next_block(ctx);
 	get_salt(ctx);
-	if (ctx->alg != cbc && ctx->has_key == true && ctx->has_iv == false)
-		return (print_error("All des modes (except cbc) needs an iv"));
+	if (ctx->alg != ecb && ctx->has_key == true && ctx->has_iv == false)
+		return (print_error("All des modes (except ecb) needs an iv"));
 	if (ctx->has_key == false)
 		get_key_iv(ctx);
+	if (ctx->print_keys)
+	{
+		ft_printf("Salt= %.16lX\n", ctx->salt);
+		ft_printf("Key = %.16lX\n", ctx->key);
+		if (ctx->alg == cbc)
+			ft_printf("Iv  = %.16lX\n", ctx->iv);
+	}
 	gen_subkeys(ctx);
 	return (des_loop_blocks(ctx));
 }

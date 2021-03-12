@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 01:50:32 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/17 17:47:38 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:55:04 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct	s_des_args {
 	char		*filename_out;
 	int			fd_out;
 	bool		password_malloced;
+	bool		no_salt;
+	bool		print_keys;
 	char		*password;
 	char		*key_str;
 	char		*salt_str;

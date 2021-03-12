@@ -6,7 +6,7 @@
 /*   By: eduwer <eduwer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 14:03:45 by eduwer            #+#    #+#             */
-/*   Updated: 2021/01/09 01:16:41 by eduwer           ###   ########.fr       */
+/*   Updated: 2021/03/12 14:58:54 by eduwer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,56 @@
 int			print_commands(char *name)
 {
 	if (name != NULL)
-		ft_fdprintf(2, "ft_ssl: Error: '%s' is an invalid command.\n\n", name);
+		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", name);
 	else
-		ft_fdprintf(2, "Usage: ./ft_ssl <command>\n\n");
-	ft_fdprintf(2, "Standart commands:\n\n");
-	ft_fdprintf(2, "Message Digest commands:\nmd5\nsha256\nsha384\nsha512\n\n");
-	ft_fdprintf(2, "Cipher commands:\nbase64\ndes\ndes-cbc\ndes-ecb\n");
+		ft_printf("Usage: ./ft_ssl <command>\n\n");
+	ft_printf("Standart commands:\n\n");
+	ft_printf("Message Digest commands:\nmd5\nsha256\nsha384\nsha512\n\n");
+	ft_printf("Cipher commands:\nbase64\ndes\ndes-cbc\ndes-ecb\n");
 	return (1);
 }
 
 int			print_hash_usage(void)
 {
-	ft_fdprintf(2, "Usage: ./ft_ssl <hash command> [-pqr] [-s string] \
-[files ...]\n");
+	ft_printf("Usage: ft_ssl <hash command> [options] [files ...]\n\nOptions:\
+\n  -h\t\tPrint this help and exit\
+\n  -p\t\tRead from stdin, echo stdin then output the hash\
+\n  -q\t\tQuiet mode, output only the hash\
+\n  -r\t\tReverse mode (output the hash and then the name of the file hashed)\
+\n  -s <string>\tHash the provided string\n");
 	return (1);
 }
 
 int			print_base64_usage(void)
 {
-	ft_fdprintf(2, "Usage: ./ft_ssl base64 [-ed] [-i input_file] \
-[-o output_file]\n");
+	ft_printf("Usage: ft_ssl base64 [options]\n\nOptions:\
+\n  -d\t\tUse decrypt mode\
+\n  -e\t\tUse encrypt mode (default)\
+\n  -h\t\tPrint this help and exit\
+\n  -i <file>\tInput file\
+\n  -o <file>\tOutput file\n");
 	return (1);
 }
 
 int			print_des_usage(void)
 {
-	ft_fdprintf(2, "Usage: ./ft_ssl [des des-ecb des-cbc] [-ade] \
-[-i input file] [-o output file] [-p password] [-k hex key] [-s hex salt] \
-[-v hex initialization vector]\n");
+	ft_printf("Usage: ft_ssl [des des-ecb des-cbc] [options]\n\n\
+Options:\
+\n  -a\t\tThe input / output is base64 encoded\
+\n  -d\t\tUse decrypt mode\
+\n  -e\t\tUse encrypt mode (default)\
+\n  -h\t\tPrint this help and exit\
+\n  --print_keys\tPrint the salt / key / iv to stderr\
+\n  --no_salt\tOn encryption: do not output the salt to the file, \
+\n\t\tOn decryption: do not expect salt at the beginning of the file \
+(the salt must be provided if the key is not provided)\
+\n  -i <file>\tInput file\
+\n  -o <file>\tOutput file\
+\n  -p <password>\tPassword to use\
+\n  -k <key>\tEncryption key, in hexadecimal format\
+\n  -s <salt>\tSalt used for key derivation, in hexadecimal format\
+\n  -v <iv>\tInitialisation vector, used for all des modes except ecb, \
+in hexadecimal format\n");
 	return (1);
 }
 
